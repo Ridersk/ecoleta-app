@@ -39,7 +39,7 @@ const CreatePoint = () => {
 
   const [selectedUf, setSelectedUf] = useState('0');
   const [selectedCity, setSelectedCity] = useState('0');
-  const [selectedItems, setselectedItems] = useState<number[]>([]);
+  const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0, 0]);
 
   const history = useHistory();
@@ -109,9 +109,9 @@ const CreatePoint = () => {
 
     if (alreadySelected > -1) {
       const filteredItems = selectedItems.filter(item => item !== id);
-      setselectedItems(filteredItems);
+      setSelectedItems(filteredItems);
     } else {
-      setselectedItems([...selectedItems, id]);
+      setSelectedItems([...selectedItems, id]);
     }
   }
 
