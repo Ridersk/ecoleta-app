@@ -8,9 +8,16 @@ import {
   Text
 } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Home = () => {
+  const navigation = useNavigation();
+
+  function handleNavigateToPoints() {
+    navigation.navigate('Points');
+  }
+
   return (
     <ImageBackground
       source={require('../../assets/home-background.png')}
@@ -24,10 +31,10 @@ const Home = () => {
       </View>
 
       <View style={styles.footer}>
-        <RectButton style={styles.button} onPress={() => { }}>
+        <RectButton style={styles.button} onPress={handleNavigateToPoints}>
           <View style={styles.buttonIcon}>
             <Text>
-              <Icon name="arrow-right" color="#FFFF" size={24} />
+              <Icon name="arrow-right" color="#FFFFFF" size={24} />
             </Text>
           </View>
           <Text style={styles.buttonText}>
@@ -42,8 +49,7 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 32,
-    backgroundColor: '#F0F0F5'
+    padding: 32
   },
 
   main: {
