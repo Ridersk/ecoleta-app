@@ -1,0 +1,10 @@
+build:
+  docker:
+    web: Dockerfile
+  config:
+    NODE_ENV: production
+release:
+  command:
+    - cd backend/ && npm install && npm run knex:migrate && npm run knex:seed && cd ..
+run:
+  web: npm start --prefix backend/
