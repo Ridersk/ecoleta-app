@@ -19,14 +19,13 @@ import api from '../../services/api';
 interface Item {
   id: number;
   title: string;
-  image_url: string;
+  image: string;
 }
 
 interface Point {
   id: number;
   name: string;
   image: string;
-  image_url: string;
   latitude: number;
   longitude: number;
 }
@@ -85,6 +84,7 @@ const Points = () => {
       }
     }).then(response => {
       setPoints(response.data);
+      console.log("Points:", response.data);
     })
   }, [selectedItems])
 
@@ -141,7 +141,7 @@ const Points = () => {
                   <View style={styles.mapMarkerContainer}>
                     <Image
                       style={styles.mapMarkerImage}
-                      source={{ uri: point.image_url }}
+                      source={{ uri: point.image }}
                     />
                     <Text style={styles.mapMarkerTitle}>{point.name}</Text>
                   </View>
@@ -167,7 +167,7 @@ const Points = () => {
               onPress={() => handleSelectItem(item.id)}
               activeOpacity={0.6}
             >
-              <SvgUri width={42} height={42} uri={item.image_url} />
+              <SvgUri width={42} height={42} uri={item.image} />
               <Text style={styles.itemTitle}>{item.title}</Text>
             </TouchableOpacity>
           ))}

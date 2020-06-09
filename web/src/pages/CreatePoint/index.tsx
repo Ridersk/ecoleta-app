@@ -15,7 +15,7 @@ import logo from '../../assets/logo.svg';
 interface Item {
   id: number;
   title: string;
-  image_url: string;
+  image: string;
 }
 
 interface IBGEUFResponse {
@@ -260,7 +260,7 @@ const CreatePoint = () => {
                 onClick={() => handleSelectItem(item.id)}
                 className={selectedItems.includes(item.id) ? 'selected' : ''}
               >
-                <img src={item.image_url} alt={item.title} />
+                <img src={item.image} alt={item.title} />
                 <span>{item.title}</span>
               </li>
             ))}
