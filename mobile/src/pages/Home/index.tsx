@@ -14,15 +14,10 @@ import { useNavigation } from '@react-navigation/native';
 
 
 const Home = () => {
-  const [uf, setUf] = useState('');
-  const [city, setCity] = useState('');
   const navigation = useNavigation();
 
   function handleNavigateToPoints() {
-    navigation.navigate('Points', {
-      uf,
-      city
-    });
+    navigation.navigate('Points');
   }
 
   return (
@@ -41,23 +36,6 @@ const Home = () => {
         </View>
 
         <View style={styles.footer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Digite a UF"
-            value={uf}
-            maxLength={2}
-            autoCapitalize="characters"
-            autoCorrect={false}
-            onChangeText={setUf}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Digite a cidade"
-            value={city}
-            autoCorrect={false}
-            onChangeText={setCity}
-          />
-
           <RectButton style={styles.button} onPress={handleNavigateToPoints}>
             <View style={styles.buttonIcon}>
               <Text>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Feather as Icon } from '@expo/vector-icons';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import {
   StyleSheet,
   View,
@@ -30,22 +30,14 @@ interface Point {
   longitude: number;
 }
 
-interface Params {
-  uf: string;
-  city: string;
-}
-
 const Points = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [points, setPoints] = useState<Point[]>([]);
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
-  const [initialPosition, setInitialPosition] = useState<[number, number]>([0, 0]);
+  const [lastPosition, setLastPosition] = useState<[number, number]>([0, 0]);
 
   const navigation = useNavigation();
-  const route = useRoute();
-
-  const routeParams = route.params as Params;
 
   useEffect(() => {
     async function loadPosition() {
@@ -60,14 +52,14 @@ const Points = () => {
 
       const { latitude, longitude } = location.coords;
 
-      setInitialPosition([
+      setLastPosition([
         latitude,
         longitude
       ]);
     }
 
     loadPosition();
-  })
+  }, []);
 
   useEffect(() => {
     api.get('items').then(response => {
@@ -78,15 +70,14 @@ const Points = () => {
   useEffect(() => {
     api.get('points', {
       params: {
-        city: routeParams.city,
-        uf: routeParams.uf,
+        latitude: lastPosition[0],
+        longitude: lastPosition[1],
         items: selectedItems
       }
     }).then(response => {
       setPoints(response.data);
-      console.log("Points:", response.data);
     })
-  }, [selectedItems])
+  }, [selectedItems]);
 
   function handleNavigateBack() {
     navigation.goBack();
@@ -118,12 +109,12 @@ const Points = () => {
         <Text style={styles.description}>Encontre no mapa um ponto de coleta.</Text>
 
         <View style={styles.mapContainer}>
-          {initialPosition[0] !== 0 && (
+          {lastPosition[0] !== 0 && (
             <MapView
               style={styles.map}
               initialRegion={{
-                latitude: initialPosition[0],
-                longitude: initialPosition[1],
+                latitude: lastPosition[0],
+                longitude: lastPosition[1],
                 latitudeDelta: 0.014,
                 longitudeDelta: 0.014
               }}
