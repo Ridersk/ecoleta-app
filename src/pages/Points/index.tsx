@@ -48,14 +48,7 @@ const Points = () => {
         return;
       }
 
-      const location = await Location.getCurrentPositionAsync();
-
-      const { latitude, longitude } = location.coords;
-
-      setLastPosition([
-        latitude,
-        longitude
-      ]);
+      updatePosition()
     }
 
     loadPosition();
@@ -68,6 +61,7 @@ const Points = () => {
   }, []);
 
   useEffect(() => {
+    updatePosition()
     api.get('points', {
       params: {
         latitude: lastPosition[0],
@@ -78,6 +72,17 @@ const Points = () => {
       setPoints(response.data);
     })
   }, [selectedItems]);
+
+  async function updatePosition() {
+    const location = await Location.getCurrentPositionAsync();
+
+    const { latitude, longitude } = location.coords;
+
+    setLastPosition([
+      latitude,
+      longitude
+    ]);
+  }
 
   function handleNavigateBack() {
     navigation.goBack();
